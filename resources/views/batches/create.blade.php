@@ -288,7 +288,7 @@
 
                 <!-- Submit and Cancel Buttons -->
                 <div class="d-flex justify-content-end mt-4">
-                    <a href="/batches" class="btn btn-danger btn-custom">Cancel</a>
+                    <a href="/" class="btn btn-danger btn-custom">Cancel</a>
                     <button type="submit" class="btn btn-success btn-custom">Save & Continue</button>
                 </div>
             </form>
@@ -296,13 +296,11 @@
 
         <script>
             $(document).ready(function() {
-                // Initialize datepickers for start dates
                 $('.datepicker').datepicker({
                     format: 'dd/mm/yyyy',
                     autoclose: true
                 });
 
-                // Set today's date as the default start date for all modules
                 var today = new Date();
                 var formattedDate = ('0' + today.getDate()).slice(-2) + '/' + ('0' + (today.getMonth() + 1)).slice(-2) +
                     '/' + today.getFullYear();
@@ -312,13 +310,11 @@
                 $('#module3Start').datepicker('setDate', today);
                 $('#module4Start').datepicker('setDate', today);
 
-                // Function to update end date based on start date
                 function updateEndDate(startDateInputId, endDateInputId, moduleNumber) {
                     var startDate = $(startDateInputId).datepicker('getDate');
                     var endDate = new Date(startDate);
                     endDate.setDate(startDate.getDate() + 4);
                     $(endDateInputId).datepicker('setDate', endDate);
-                    // $(endDateInputId).val($.datepicker.formatDate('dd/mm/yy', endDate));
                     $('#module1End').datepicker('destroy');
                     $('#module2End').datepicker('destroy');
                     $('#module3End').datepicker('destroy');
@@ -333,11 +329,8 @@
                             dayDate));
                     }
 
-
                 }
 
-
-                // Function to set start date limitations for subsequent modules
                 function setStartDateLimit(moduleStartId, previousModuleEndId) {
                     $(moduleStartId).datepicker('setStartDate', $(previousModuleEndId).datepicker('getDate'));
                 }
@@ -378,30 +371,26 @@
 
 
                 $('#batchForm').on('submit', function(event) {
-                    event.preventDefault(); // Prevent the default form submission
+                    event.preventDefault();
 
-                    // Clear previous error messages
                     $('.is-invalid').removeClass('is-invalid');
                     $('#errorList').empty();
 
                     $.ajax({
-                        url: $(this).attr('action'), // Form action URL
+                        url: $(this).attr('action'),
                         type: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                        data: $(this).serialize(), // Serialize form data
+                        data: $(this).serialize(),
                         success: function(response) {
-                            console.log('response.success', response);
-                            window.location.href = response.redirect; // Redirect to the new route
+                            window.location.href = response.redirect;
                             alert(response.message);
 
                         },
                         error: function(xhr) {
-                            // Handle error response
-                            // if (xhr.status === 422) {
-                            // Validation errors
+
                             let errors = xhr.responseJSON.errors;
 
                             $.each(errors, function(key, value) {
@@ -410,10 +399,7 @@
                                 $('#errorList').append('<li>' + value[0] + '</li>');
                             });
                             $('#errorList').show();
-                            // } else {
-                            //     // Other errors
-                            //     alert('Something went wrong! Please try again.');
-                            // }
+
                         }
                     });
                 });

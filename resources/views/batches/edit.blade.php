@@ -85,15 +85,16 @@
         <div class="form-container">
             <h3 class="form-heading">Create Batch</h3>
             <ul id="errorList" class="alert alert-danger" style="display:none;"></ul>
-            <form action="{{ route('batches.store') }}" method="POST" id="batchForm">
+            <form action="{{ route('batches.update', $batch->id) }}" method="POST" id="batchForm">
                 @csrf
-                <!-- Batch Name -->
+                @method('PUT')
+
                 <div class="mb-4">
                     <label for="batchName" class="form-label">Batch Name</label>
                     <input type="text" class="form-control" id="batchName" name="batch_name"
                         value="{{ $batch->batch_name }}" required>
                 </div>
-                <!-- Module 1 Toggle -->
+
                 <div class="module-block">
                     <div class="row ">
                         <div class="col-md-2">
@@ -101,7 +102,7 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control datepicker" id="module1Start" name="module1_start"
-                                 required>
+                                required>
                         </div>
                         <div class="col-md-4">
                             <input readonly type="text" class="form-control" id="module1End" name="module1_end"
@@ -140,7 +141,6 @@
                     </div>
                 </div>
 
-                <!-- Module 2 Toggle -->
                 <div class="module-block">
 
                     <div class="row ">
@@ -192,7 +192,7 @@
                     </div>
                 </div>
 
-                <!-- Module 3 Toggle -->
+
                 <div class="module-block">
 
                     <div class="row ">
@@ -239,7 +239,7 @@
                     </div>
                 </div>
 
-                <!-- Module 4 Toggle -->
+
                 <div class="module-block">
 
                     <div class="row ">
@@ -286,7 +286,6 @@
                     </div>
                 </div>
 
-                <!-- Submit and Cancel Buttons -->
                 <div class="d-flex justify-content-end mt-4">
                     <a href="/batches" class="btn btn-danger btn-custom">Cancel</a>
                     <button type="submit" class="btn btn-success btn-custom">Save & Continue</button>
@@ -296,19 +295,10 @@
 
         <script>
             $(document).ready(function() {
-                // Initialize datepickers for start dates
                 $('.datepicker').datepicker({
                     format: 'dd/mm/yyyy',
                     autoclose: true
                 });
-
-                var module1Start = "{{ $batch->module1_start }}";
-
-                if (module1Start) {
-                    var dateParts = module1Start.split("-");
-                    var formattedDate = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0];
-                    $('#module1Start').datepicker('setDate', formattedDate);
-                }
 
                 var today = new Date();
                 var formattedDate = ('0' + today.getDate()).slice(-2) + '/' + ('0' + (today.getMonth() + 1)).slice(-2) +
@@ -323,7 +313,7 @@
                     var startDate = $(startDateInputId).datepicker('getDate');
                     var endDate = new Date(startDate);
                     endDate.setDate(startDate.getDate() + 4);
-                    $(endDateInputId).val($.datepicker.formatDate('dd/mm/yy', endDate));
+                    $(endDateInputId).datepicker('setDate', endDate);
                     $('#module1End').datepicker('destroy');
                     $('#module2End').datepicker('destroy');
                     $('#module3End').datepicker('destroy');
@@ -337,13 +327,14 @@
                         $(`#module${moduleNumber}_day${i}`).val($.datepicker.formatDate('dd/mm/yy',
                             dayDate));
                     }
+
                 }
 
                 function setStartDateLimit(moduleStartId, previousModuleEndId) {
-                    var endDate = $.datepicker.formatDate('mm/dd/yy', $(previousModuleEndId).datepicker('getDate'));
-                    $(moduleStartId).datepicker('setStartDate', endDate);
+                    $(moduleStartId).datepicker('setStartDate', $(previousModuleEndId).datepicker('getDate'));
                 }
 
+                // Update end dates when start date changes
                 $('#module1Start').on('changeDate', function() {
                     updateEndDate('#module1Start', '#module1End', 1);
                     // Set the start date for the next module

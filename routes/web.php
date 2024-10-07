@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/batches', [BatchController::class, 'index'])->name("batches.index");
+Route::get('/', [BatchController::class, 'index'])->name("batches.index");
 Route::get('/batches/create', [BatchController::class, 'create']);
 Route::get('/batches/list', [BatchController::class, 'batchList']);
 Route::post('/batches/save', [BatchController::class, 'store'])->name('batches.store');

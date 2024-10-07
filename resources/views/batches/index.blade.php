@@ -45,9 +45,9 @@
     </nav>
 
     <div class="container mt-5">
-        <div>
-            <h2 class="mb-4">Batches List</h2>
-            <a href="/batches/create" class="btn btn-primary">Create New Batch</a>
+        <div class="d-flex justify-content-between mb-4">
+            <h2>Batches List</h2>
+            <a href="/batches/create" class="btn btn-primary px-10">Create New Batch</a>
         </div>
         <table class="table table-bordered">
             <thead class="table-dark">
