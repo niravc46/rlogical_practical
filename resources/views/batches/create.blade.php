@@ -76,6 +76,9 @@
         .btn-custom {
             margin-top: 20px;
         }
+        .cancelBtn{
+            margin-right: 8px;
+        }
     </style>
 </head>
 
@@ -288,8 +291,12 @@
 
                 <!-- Submit and Cancel Buttons -->
                 <div class="d-flex justify-content-end mt-4">
-                    <a href="/" class="btn btn-danger btn-custom">Cancel</a>
-                    <button type="submit" class="btn btn-success btn-custom">Save & Continue</button>
+                    <div class="cancelBtn">
+                        <a href="/" class="btn btn-danger btn-custom">Cancel</a>
+                    </div>
+                    <div class="mr-4">
+                        <button type="submit" class="btn btn-success btn-custom">Save & Continue</button>
+                    </div>
                 </div>
             </form>
         </div>
