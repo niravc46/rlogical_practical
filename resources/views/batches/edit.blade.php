@@ -90,9 +90,9 @@
                 @method('PUT')
 
                 <div class="mb-4">
-                    <label for="batchName" class="form-label">Batch Name</label>
+                    <label for="batchName" class="form-label">Batch Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="batchName" name="batch_name"
-                        value="{{ $batch->batch_name }}" required>
+                        value="{{ $batch->batch_name }}" >
                 </div>
 
                 <div class="module-block">
@@ -102,10 +102,12 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control datepicker" id="module1Start" name="module1_start"
+                                value="{{ \Carbon\Carbon::parse($batch->module1_start)->format('d/m/Y') }}"
                                 required>
                         </div>
                         <div class="col-md-4">
                             <input readonly type="text" class="form-control" id="module1End" name="module1_end"
+                            value="{{ \Carbon\Carbon::parse($batch->module1_end)->format('d/m/Y') }}"
                                 value="{{ $batch->module1_end }}">
 
                         </div>
@@ -149,11 +151,11 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control datepicker" id="module2Start" name="module2_start"
-                                value="{{ $batch->module2_start }}" required>
+                            value="{{ \Carbon\Carbon::parse($batch->module2_start)->format('d/m/Y') }}" required>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="module2End" name="module2_end"
-                                value="{{ $batch->module2_end }}" readonly>
+                            value="{{ \Carbon\Carbon::parse($batch->module2_end)->format('d/m/Y') }}" readonly>
                         </div>
                         <div class="module-title col-md-2" data-bs-toggle="collapse" data-bs-target="#module2"
                             aria-expanded="false" aria-controls="module2">
@@ -201,11 +203,11 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control datepicker" id="module3Start"
-                                name="module3_start" value="{{ $batch->module3_start }}" required>
+                                name="module3_start" value="{{ \Carbon\Carbon::parse($batch->module3_start)->format('d/m/Y') }}" required>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="module3End"
-                                value="{{ $batch->module3_end }}" name="module3_end" readonly>
+                            value="{{ \Carbon\Carbon::parse($batch->module3_end)->format('d/m/Y') }}" name="module3_end" readonly>
                         </div>
                         <div class="module-title col-md-2" data-bs-toggle="collapse" data-bs-target="#module3"
                             aria-expanded="false" aria-controls="module3">
@@ -248,11 +250,11 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control datepicker" id="module4Start"
-                                name="module4_start" value="{{ $batch->module4_start }}" required>
+                                name="module4_start" value="{{ \Carbon\Carbon::parse($batch->module4_start)->format('d/m/Y') }}" required>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="module4End" name="module4_end"
-                                value="{{ $batch->module5_start }}" readonly>
+                            value="{{ \Carbon\Carbon::parse($batch->module4_end)->format('d/m/Y') }}" readonly>
                         </div>
                         <div class="module-title col-md-2" data-bs-toggle="collapse" data-bs-target="#module4"
                             aria-expanded="false" aria-controls="module4">
@@ -287,7 +289,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">
-                    <a href="/batches" class="btn btn-danger btn-custom">Cancel</a>
+                    <a href="/" class="btn btn-danger btn-custom">Cancel</a>
                     <button type="submit" class="btn btn-success btn-custom">Save & Continue</button>
                 </div>
             </form>
@@ -303,11 +305,6 @@
                 var today = new Date();
                 var formattedDate = ('0' + today.getDate()).slice(-2) + '/' + ('0' + (today.getMonth() + 1)).slice(-2) +
                     '/' + today.getFullYear();
-
-                $('#module1Start').datepicker('setDate', today);
-                $('#module2Start').datepicker('setDate', today);
-                $('#module3Start').datepicker('setDate', today);
-                $('#module4Start').datepicker('setDate', today);
 
                 function updateEndDate(startDateInputId, endDateInputId, moduleNumber) {
                     var startDate = $(startDateInputId).datepicker('getDate');

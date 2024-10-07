@@ -53,11 +53,11 @@ class BatchController extends Controller
             'batch_name' => 'required|string|max:255',
             'module1_start' => 'required|date|before_or_equal:module1_end',
             'module1_end' => 'required|date',
-            'module2_start' => 'required|date|after:module1_end|before_or_equal:module2_end',
+            'module2_start' => 'required|date|after_or_equal:module1_end|before_or_equal:module2_end',
             'module2_end' => 'required|date',
-            'module3_start' => 'required|date|after:module2_end|before_or_equal:module3_end',
+            'module3_start' => 'required|date|after_or_equal:module2_end|before_or_equal:module3_end',
             'module3_end' => 'required|date',
-            'module4_start' => 'required|date|after:module3_end|before_or_equal:module4_end',
+            'module4_start' => 'required|date|after_or_equal:module3_end|before_or_equal:module4_end',
             'module4_end' => 'required|date',
         ]);
         Batch::create($validated);

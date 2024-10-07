@@ -89,9 +89,9 @@
                 @csrf
                 <!-- Batch Name -->
                 <div class="mb-4">
-                    <label for="batchName" class="form-label">Batch Name</label>
+                    <label for="batchName" class="form-label">Batch Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="batchName" name="batch_name" value="Batch 3"
-                        required>
+                        >
                 </div>
                 <!-- Module 1 Toggle -->
                 <div class="module-block">
